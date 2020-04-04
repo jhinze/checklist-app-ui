@@ -1,0 +1,17 @@
+.switch-off.btn.btn-primary {
+    background-color: DarkGoldenRod !important;
+    border-color: DarkGoldenRod !important;
+}
+
+.switch.btn.off.btn-primary {
+    background-color: DarkGoldenRod !important;
+    border-color: DarkGoldenRod !important;
+}
+
+.switch.btn {
+    border-radius: 10px !important;
+}
+
+.switch-handle {
+    border-radius: 5px !important;
+}
