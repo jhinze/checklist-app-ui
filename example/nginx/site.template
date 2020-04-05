@@ -1,0 +1,15 @@
+server {
+
+
+    location /checklist-api/ {
+        proxy_pass http://checklist_api/;
+    }
+
+    location / {
+        proxy_pass http://checklist_ui/;
+    }
+
+}
+
+
+

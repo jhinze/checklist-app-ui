@@ -1,0 +1,46 @@
+version: '3.7'
+services:
+  database:
+    container_name: checklist_db
+    image: postgres
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=checklist
+    volumes:
+      - database:/var/lib/postgresql/data/
+    restart: always
+  api:
+    container_name: checklist_api
+    image: jhinze/checklist-app-api:latest
+    depends_on:
+      - database
+    environment:
+      - DATABASE_HOST=checklist_db
+      - DATABASE_PORT=5432
+      - DATABASE_DBNAME=checklist
+      - DATABASE_USER=user
+      - DATABASE_PASSWORD=pass
+      - DATABASE_SSL_MODE=disable
+      - DATABASE_DIALECT=postgres
+    restart: always
+  ui:
+    container_name: checklist_ui
+    image: jhinze/checklist-app-ui:latest
+    depends_on:
+      - api
+    restart: always
+  web:
+    image: nginx
+    depends_on:
+      - api
+      - ui
+    volumes:
+      - ./nginx/site.template:/etc/nginx/conf.d/site.template
+    ports:
+      - 8080:80
+    environment:
+      - NGINX_PORT=80
+    command: /bin/bash -c "cp /etc/nginx/conf.d/site.template /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
+volumes:
+  database:
