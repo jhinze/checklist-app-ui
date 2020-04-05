@@ -1,5 +1,5 @@
 FROM node:13.10.1-stretch as builder
-ARG ENV
+ENV ENV=prod
 WORKDIR /react/app
 ADD . .
 RUN yarn install --network-timeout 1000000
